@@ -127,32 +127,32 @@ describe("Database", function() {
       doc = db.rescheduleDoc(doc, 50, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 86400);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
 
       doc = db.rescheduleDoc(doc, 100, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 172800);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
 
       doc = db.rescheduleDoc(doc, 23, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 79488);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
 
       doc = db.rescheduleDoc(doc, 78, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 124001);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
 
       doc = db.rescheduleDoc(doc, 10, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 24800);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
 
       doc = db.rescheduleDoc(doc, 100, { fromNow: true, alwaysReschedule: true });
       nowCopy = new Date(now);
       nowCopy.setSeconds(nowCopy.getSeconds() + 24800 * 2);
-      expect(doc.nextRep).toEqual(nowCopy);
+      expect(doc.nextRep.toString()).toEqual(nowCopy.toString());
     });
 
 
@@ -208,6 +208,7 @@ describe("Database", function() {
 
     it("gets nearest words correctly 1", function(done) {
       db.getNearestWords(3, function(err, docs){
+        expect(err).toEqual(null);
         expect(docs[0].word).toEqual('超');
         expect(docs[1].word).toEqual('嗚呼');
         expect(docs[2].word).toEqual('世界');
@@ -217,6 +218,7 @@ describe("Database", function() {
 
     it("gets nearest words correctly 2", function(done) {
       db.getNearestWords(10, function(err, docs){
+        expect(err).toEqual(null);
         expect(docs[0].word).toEqual('超');
         expect(docs[1].word).toEqual('嗚呼');
         expect(docs[2].word).toEqual('世界');
@@ -230,6 +232,36 @@ describe("Database", function() {
         done();
       });
     }, 1000);
+
+    it("gets scheduled for now (or another date) 1", function(done) {
+      db.getScheduledForNow(function(err, docs){
+        expect(err).toEqual(null);
+        expect(docs.length).toEqual(4);
+        done();
+      }, new Date("Tue Jul 04 2017 00:00:01"));
+    }, 1000);
+
+    it("gets scheduled for now (or another date) 2", function(done) {
+      db.getScheduledForNow(function(err, docs){
+        expect(err).toEqual(null);
+        expect(docs.length).toEqual(5);
+        expect(docs[0].word).toEqual('超');
+        expect(docs[1].word).toEqual('嗚呼');
+        expect(docs[2].word).toEqual('世界');
+        expect(docs[3].word).toEqual('猫');
+        expect(docs[4].word).toEqual('喋');
+        done();
+      }, new Date(1500820040503));
+    }, 1000);
+
+    it("gets a random doc", function(done) {
+      db.getRandom(function(err, doc){
+        expect(err).toEqual(null);
+        expect(doc.word != '').toEqual(true);
+        done();
+      });
+    }, 1000);
+
   });
 
 
@@ -252,6 +284,7 @@ describe("Database", function() {
     it("gets nearest words correctly after updating schedules 1", function(done) {
       db.updateWordSchedule('xC3dntcuX1EvTtJk', 18.5, function(){
         db.getNearestWords(3, function(err, docs){
+          expect(err).toEqual(null);
           expect(docs[0].word).toEqual('嗚呼');
           expect(docs[1].word).toEqual('超');
           expect(docs[2].word).toEqual('世界');
@@ -263,6 +296,7 @@ describe("Database", function() {
     it("gets nearest words correctly after updating schedules 2", function(done) {
       db.updateWordSchedule('xC3dntcuX1EvTtJk', 18.49999999, function(){
         db.getNearestWords(3, function(err, docs){
+          expect(err).toEqual(null);
           expect(docs[0].word).toEqual('超');
           expect(docs[1].word).toEqual('嗚呼');
           expect(docs[2].word).toEqual('世界');

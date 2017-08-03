@@ -52,7 +52,6 @@ module.exports = {
 
   getNearestWords: function(n, callback){
     getDS().find({ }).sort({ nextRep: 1 }).limit(n).exec(callback);
-
   },
 
   rescheduleDoc: function(doc, score, options = {}){
@@ -78,8 +77,27 @@ module.exports = {
     return newDoc;
   },
 
+  getScheduledForNow: function(callback, date){
+    if(!date){
+      date = new Date();
+    }
+    getDS().find({ nextRep: { $lt: date } }).sort({ nextRep: 1 }).exec(callback);
+  },
 
-  updateWordSchedule: function(wordId, score, callback){
+  getRandom: function(callback){
+    getDS().count({}, function (err, count) {
+      if (!err && count > 0) {
+        // skip a random number between 0 to count-1
+        var skipCount = Math.floor(Math.random() * count);
+
+        getDS().find({}).skip(skipCount).limit(1).exec(function(err2, docs) {
+          callback(err2, docs[0]);
+        });
+      }
+    });
+  },
+
+  updateWordSchedule: function(wordId, score, callback, options = {}){
 
     if(score < 0 || score > 100){
       throw new Error('Score must be 0-100 inclusive.');
@@ -90,7 +108,7 @@ module.exports = {
         callback(err);
       }
 
-      getDS().update({ _id: wordId }, module.exports.rescheduleDoc(doc, score), {}, callback);
+      getDS().update({ _id: wordId }, module.exports.rescheduleDoc(doc, score, options), {}, callback);
 
     });
   }
