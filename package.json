@@ -1,0 +1,26 @@
+{
+  "name": "shodo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main/index.js",
+  "scripts": {
+    "test": "node node_modules/jasmine/bin/jasmine.js",
+    "start": "node node_modules/electron/cli.js .",
+    "dev": "node node_modules/electron/cli.js . & node node_modules/gulp/bin/gulp.js"
+  },
+  "author": "FeloVilches",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "electron": "^1.6.11",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-less": "^3.3.2",
+    "gulp-uglify": "^3.0.0",
+    "jasmine": "^2.7.0"
+  }
+}

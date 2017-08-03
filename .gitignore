@@ -1,0 +1,4 @@
+.data/
+node_modules/
+views/bower_components/
+views/build/
