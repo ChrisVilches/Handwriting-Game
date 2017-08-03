@@ -6,7 +6,7 @@ $(document).ready(function(){
   function updateTotalCount(){
     db.getTotalCount(function(err, count){
       if(err){
-        $.notify("Error: " + err, "warn");
+        $.notify(err, "warn");
         return;
       }
       $("#total-count").html(count);
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
     db.insertBatch(lines, function(err, newDocs){
       if(err){
-        $.notify("Error: " + err, "warn");
+        $.notify(err, "warn");
         return;
       }
 

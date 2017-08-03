@@ -6,7 +6,7 @@ var currentWord = null;
 
 module.exports.getNextWord = function(){
 
-  db.getNearestWords(10, function(err, docs){
+  db.getNearestWords(70, function(err, docs){
 
     if(err){
       $.notify("Error: " + err, "warn");
