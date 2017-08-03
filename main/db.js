@@ -13,7 +13,9 @@ function getDS(){
   		timestampData: true
   	});
     ds.ensureIndex({ fieldName: 'word', unique: true }, function (err) {
-      console.log(err);
+      if(err){
+        console.log(err);
+      }
     });
   } else {
     //console.log("DB is already open.");
