@@ -5,19 +5,20 @@ describe("Database", function() {
   var doc;
 
 
-  beforeEach(function() {
-    doc = {
-      word: '世界',
-      nextRep: new Date('2017/07/03 00:00:00'),
-      lastInterval: 86400,
-      repCount: 0
-    };
-  });
-
   describe("rescheduler", function(){
 
-    it("works on different documents (deep copies)", function() {
+    beforeEach(function() {
+      doc = {
+        word: '世界',
+        nextRep: new Date('2017/07/03 00:00:00'),
+        lastInterval: 86400,
+        lastRepDate: new Date('2017/06/02 00:00:00'),
+        repCount: 0
+      };
+    });
 
+
+    it("works on different documents (deep copies)", function() {
 
       var newDoc = db.rescheduleDoc(doc, 100);
 
@@ -118,6 +119,42 @@ describe("Database", function() {
 
     });
 
+    it("new dates are correct 3 (using fromNow = true, alwaysReschedule = true)", function() {
+
+      var now = new Date();
+      var copyNow;
+
+      doc = db.rescheduleDoc(doc, 50, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 86400);
+      expect(doc.nextRep).toEqual(nowCopy);
+
+      doc = db.rescheduleDoc(doc, 100, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 172800);
+      expect(doc.nextRep).toEqual(nowCopy);
+
+      doc = db.rescheduleDoc(doc, 23, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 79488);
+      expect(doc.nextRep).toEqual(nowCopy);
+
+      doc = db.rescheduleDoc(doc, 78, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 124001);
+      expect(doc.nextRep).toEqual(nowCopy);
+
+      doc = db.rescheduleDoc(doc, 10, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 24800);
+      expect(doc.nextRep).toEqual(nowCopy);
+
+      doc = db.rescheduleDoc(doc, 100, { fromNow: true, alwaysReschedule: true });
+      nowCopy = new Date(now);
+      nowCopy.setSeconds(nowCopy.getSeconds() + 24800 * 2);
+      expect(doc.nextRep).toEqual(nowCopy);
+    });
+
 
     it("doesn't reschedule if the card isn't due yet 1", function() {
       var first, newDoc;
@@ -148,6 +185,12 @@ describe("Database", function() {
       first = doc.nextRep.getTime();
       newDoc = db.rescheduleDoc(doc, 100);
       expect(newDoc.nextRep.getTime()).toEqual(first + (86400000 * 2)); // milliseconds
+    });
+
+    it("last rep date gets updated correctly", function() {
+      var now = new Date();
+      doc = db.rescheduleDoc(doc, 100);
+      expect(doc.lastRepDate).toEqual(now);
     });
   });
 

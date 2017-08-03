@@ -43,7 +43,8 @@ module.exports = {
         word: words[i],
         nextRep: tomorrow,
         lastInterval: 24 * 60 * 60,
-        repCount: 0
+        repCount: 0,
+        lastRepDate: new Date()
       });
     }
     getDS().insert(objs, callback);
@@ -54,10 +55,10 @@ module.exports = {
 
   },
 
-  rescheduleDoc: function(doc, score){
+  rescheduleDoc: function(doc, score, options = {}){
 
     var newDoc = _.cloneDeep(doc);
-    if(newDoc.nextRep.getTime() < new Date().getTime()){
+    if(options.alwaysReschedule || newDoc.nextRep.getTime() < new Date().getTime()){
 
       var multiplier = 2 * score / 100;
       // [0, 100) interval is reduced
@@ -65,10 +66,14 @@ module.exports = {
       // (100, 200] interval is enlarged
 
       var interval = Math.floor(newDoc.lastInterval * multiplier);
+      if(options.fromNow){
+        newDoc.nextRep = new Date();
+      }
       newDoc.nextRep.setSeconds(newDoc.nextRep.getSeconds() + interval);
       newDoc.lastInterval = interval;
     }
 
+    newDoc.lastRepDate = new Date();
     newDoc.repCount++;
     return newDoc;
   },

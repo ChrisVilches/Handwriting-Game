@@ -18,6 +18,7 @@ class DotCanvas {
     this.canvas.addEventListener('mousedown', this.ev_canvas.bind(this), false);
     this.canvas.addEventListener('mousemove', this.ev_canvas.bind(this), false);
     this.canvas.addEventListener('mouseup', this.ev_canvas.bind(this), false);
+    this.canvas.addEventListener('mouseout', this.ev_canvas.bind(this), false);
   }
 
   setOptions(options){
@@ -135,6 +136,10 @@ class DotCanvas {
         this.addDot(ev.offsetX, ev.offsetY);
         this.finishLine();
     }
+  }
+
+  mouseout(ev){
+    this.mouseup(ev);
   }
 
   clear() {
