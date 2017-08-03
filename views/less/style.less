@@ -1,7 +1,43 @@
+@light: #ededed;
+@margin-bottom: 10px;
+@dark-font-color: #343434;
+
 body {
-  background-color: #ebebeb;
+  background-color: #2d333c;
+  color: @light;
+  font-family:'メイリオ',Meiryo,sans-serif;
+}
+
+canvas {
+  background-color: @light;
+  border-color: #000000;
+  margin-bottom: @margin-bottom;
 }
 
 canvas.drawable {
-  cursor: crosshair;
+  cursor: crosshair;  
+}
+
+textarea {
+  background-color: @light!important;
+  margin-bottom: @margin-bottom;
+}
+
+.nice-title {
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.btn-bar {
+  margin-bottom: @margin-bottom;
+}
+
+.btn-primary {
+  background-color: #256685;
+}
+
+.btn-secondary {
+  background-color: #aaaaaa;
+  color: @dark-font-color;
 }
