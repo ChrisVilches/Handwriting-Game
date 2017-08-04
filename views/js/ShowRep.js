@@ -1,5 +1,6 @@
 const electron = require('electron');
 const Website = electron.remote.require('./website');
+const Config = electron.remote.require('./config');
 const db = electron.remote.require('./db');
 const InputService = require('./InputService');
 
@@ -16,7 +17,9 @@ function setCurrentWord(doc){
   }
 
   if(currentWord == null || currentWord.word != doc.word){
-    Website.googleWord(doc.word);
+    if(Config.getAutoDict()){
+      Website.googleWord(doc.word);
+    }
   }
 
   currentWord = doc;
@@ -97,6 +100,10 @@ module.exports.notNow = function(callback){
   db.updateWordSchedule(currentWord._id, 50, module.exports.getNextWord, { fromNow: true });
   $.notify("(´・ω・｀)", "success");
   callback();
+}
+
+module.exports.getCurrentWord = function(){
+  return currentWord;
 }
 
 

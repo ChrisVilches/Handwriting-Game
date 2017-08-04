@@ -11,7 +11,8 @@
   <script>
   const ipcRenderer = require('electron').ipcRenderer;
   ipcRenderer.on('toggle-debug-canvas', function(){ $('#canvas-mirror').toggle() });
-  require('./js/BatchAdd');
+  require('./js/sidebar/BatchAdd');
+  require('./js/sidebar/Config');
   require('./js/ShowRep');
   require('./js/CanvasPanel');
   $(document).ready(() => { $('[data-toggle="tooltip"]').tooltip() });
@@ -35,6 +36,26 @@
         <div class="btn-bar">
           <button id="batch-add-btn" class="btn btn-primary" style="display: none;"><i class="glyphicon glyphicon-ok"></i></button>
         </div>
+
+
+        <form class="form-horizontal" role="form">
+
+          <!-- Auto dictionary switch -->
+          <div class="form-group" data-toggle="tooltip" data-placement="right" title="Open (or reload) a dictionary window every time a new word appears">
+            <label for="auto-dict-switch" class="col-lg-6 control-label">Auto-dict</label>
+            <div class="col-lg-6">
+              <label class="switch">
+                <input type="checkbox" id="auto-dict-switch">
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+
+        </form>
+
+
+
+
       </div>
 
       <div class="col-xs-9">
@@ -47,10 +68,7 @@
           <button id="canvas-not-now" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Pass (I don't want to answer it now)"><i class="glyphicon glyphicon-time"></i></button>
           <button id="canvas-undo" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Undo"><i class="glyphicon glyphicon-repeat"></i></button>
           <button id="canvas-clear" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Clear canvas"><i class="glyphicon glyphicon-remove"></i></button>
-          <label class="switch">
-            <input type="checkbox">
-            <span class="slider round"></span>
-          </label>
+
         </div>
         <div id="result"></div>
       </div>
