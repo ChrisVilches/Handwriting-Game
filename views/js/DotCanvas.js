@@ -10,6 +10,7 @@ class DotCanvas {
     this.memCanvas.width = this.canvas.width;
     this.memCanvas.height = this.canvas.height;
     this.memCtx = this.memCanvas.getContext('2d');
+    this.undoHistory = [];
 
     this.init();
     this.setOptions(options);
@@ -41,6 +42,22 @@ class DotCanvas {
 
   getLines(){
     return this.lines;
+  }
+
+  undo(){
+    this.undoHistory.pop();
+
+    this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.memCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    if(this.undoHistory.length > 0){
+      var prev = this.undoHistory[this.undoHistory.length - 1];
+      this.context.drawImage(prev, 0, 0);
+      this.memCtx.drawImage(prev, 0, 0);
+    }
+
+    this.lines.pop();
+    this.finishLineCallback();
   }
 
   getPrettyLines(){
@@ -91,6 +108,13 @@ class DotCanvas {
   }
 
   finishLine(){
+    var canvasCopy = document.createElement('canvas');
+    canvasCopy.width = this.canvas.width;
+    canvasCopy.height = this.canvas.height;
+    var canvasCopyCtx = canvasCopy.getContext('2d');
+    canvasCopyCtx.drawImage(this.canvas, 0, 0);
+    this.undoHistory.push(canvasCopy);
+
     this.lines.push(this.temp);
     this.temp = [[], [], []];
     this.finishLineCallback();
@@ -145,6 +169,7 @@ class DotCanvas {
   clear() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.memCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.undoHistory = [];
     this.init();
     this.clearCallback();
   }

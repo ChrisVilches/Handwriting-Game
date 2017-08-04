@@ -41,6 +41,8 @@ $(document).ready(function(){
     canvasMirror.getContext("2d").clearRect(0, 0, canvasMirror.width, canvasMirror.height);
   });
 
+
+
   var service = new InputService({
     width: Number($('#canvas-main').attr('width')),
     height: Number($('#canvas-main').attr('height')),
@@ -48,6 +50,16 @@ $(document).ready(function(){
   });
 
   $("#canvas-clear").click(() => canvas.clear());
+
+  $('#canvas-undo').click(() => canvas.undo());
+
+  $(document).bind('keydown', function(e){
+    if (e.keyCode == 90 && e.ctrlKey){
+      if($('input:focus, textarea:focus').length > 0)
+        return;
+      canvas.undo();
+    }
+  });
 
   $("#canvas-answer").click(function(){
 
