@@ -13,6 +13,7 @@ function getRandomElement(array){
   return array[Math.floor(Math.random() * array.length)];
 }
 
+// All functions must return ONE document unless there are no documents in the database.
 var ways = [
   function(){
     db.getRandom(function(err, doc){
@@ -20,6 +21,10 @@ var ways = [
         $.notify(err, "warn");
         return;
       }
+
+      if(!doc)
+        return;
+
       console.log("Using a random doc")
       setCurrentWord(doc);
     });
@@ -31,6 +36,10 @@ var ways = [
         $.notify(err, "warn");
         return;
       }
+
+      if(!doc)
+        return;
+
       console.log("Using least reps (reps: " + doc.repCount + ")")
       setCurrentWord(doc);
     });
@@ -39,7 +48,6 @@ var ways = [
 
 
 module.exports.getNextWord = function(){
-
   db.getScheduledForNow(function(err, docs){
 
     if(err){
@@ -54,9 +62,14 @@ module.exports.getNextWord = function(){
       console.log("Scheduled for now (date: " + doc.nextRep + ")");
       setCurrentWord(doc);
     }
-
   });
 }
+
+
+module.exports.hasWordToAnswer = function(){
+  return currentWord != null;
+}
+
 
 module.exports.tryAnswer = function(response, callback){
 

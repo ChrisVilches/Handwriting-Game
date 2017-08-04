@@ -11,6 +11,14 @@ describe("Find queries", function(){
     }));
   });
 
+  it("gets total count", function(done) {
+    db.getTotalCount(function(err, count){
+      expect(err).toEqual(null);
+      expect(count).toEqual(13);
+      done();
+    });
+  }, 1000);
+
   it("gets nearest words correctly 1", function(done) {
     db.getNearestWords(3, function(err, docs){
       expect(err).toEqual(null);
