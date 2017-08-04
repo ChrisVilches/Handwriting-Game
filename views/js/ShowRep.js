@@ -13,6 +13,30 @@ function getRandomElement(array){
   return array[Math.floor(Math.random() * array.length)];
 }
 
+var ways = [
+  function(){
+    db.getRandom(function(err, doc){
+      if(err){
+        $.notify(err, "warn");
+        return;
+      }
+      console.log("Using a random doc")
+      setCurrentWord(doc);
+    });
+  },
+
+  function(){
+    db.getLeastReps(20, function(err, docs){
+      if(err){
+        $.notify(err, "warn");
+        return;
+      }
+      console.log("Using least reps")
+      setCurrentWord(getRandomElement(docs));
+    });
+  }
+];
+
 
 module.exports.getNextWord = function(){
 
@@ -24,20 +48,11 @@ module.exports.getNextWord = function(){
     }
 
     if(docs.length == 0){
-      console.log("No docs are scheduled for now")
+      console.log("No docs are scheduled for now");
+      getRandomElement(ways)();
 
-      db.getRandom(function(err, doc){
-
-        if(err){
-          $.notify(err, "warn");
-          return;
-        }
-        console.log("Using a random doc")
-        setCurrentWord(doc);
-
-
-      });
     } else {
+      console.log("Scheduled for now");
       setCurrentWord(getRandomElement(docs));
     }
 
