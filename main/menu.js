@@ -50,8 +50,8 @@ const template = [
     role: 'help',
     submenu: [
       {
-        label: 'Learn More',
-        click () { require('electron').shell.openExternal('http://electron.atom.io') }
+        label: 'Github',
+        click () { require('electron').shell.openExternal('https://github.com/FeloVilches/Handwriting-Game') }
       }
     ]
   }
