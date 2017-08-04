@@ -62,11 +62,11 @@ module.exports.tryAnswer = function(response, callback){
 
   if(currentWord.word == response){
     db.updateWordSchedule(currentWord._id, 100, module.exports.getNextWord, { fromNow: true });
-    $.notify("(^_^;) " + currentWord.word + "==" + response, "success");
+    $.notify("(^_^) " + currentWord.word + " = " + response, "success");
     callback(true);
   } else {
     db.updateWordSchedule(currentWord._id, 25, module.exports.getNextWord, { fromNow: true });
-    $.notify("(T_T) " + currentWord.word + "!=" + response, "warn");
+    $.notify("(T_T) " + currentWord.word + " ≠ " + response, "warn");
     callback(false);
   }
 
@@ -74,7 +74,7 @@ module.exports.tryAnswer = function(response, callback){
 
 
 module.exports.notNow = function(callback){
-  db.updateWordSchedule(currentWord._id, 80, module.exports.getNextWord, { fromNow: true });
+  db.updateWordSchedule(currentWord._id, 50, module.exports.getNextWord, { fromNow: true });
   $.notify("(´・ω・｀)", "success");
   callback();
 }
