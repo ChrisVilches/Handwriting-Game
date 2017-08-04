@@ -14,6 +14,7 @@
   require('./js/BatchAdd');
   require('./js/ShowRep');
   require('./js/CanvasPanel');
+  $(document).ready(() => { $('[data-toggle="tooltip"]').tooltip() });
   </script>
 
   <!-- Insert this line after script imports -->
@@ -29,16 +30,18 @@
     <div class="row">
 
       <div class="col-md-3">
-        <h1 class="nice-title">Batch add</h1>
+        <h1 class="nice-title">
+          Batch add
+          <span class="question" data-toggle="tooltip" data-placement="right" data-html="true" title="One word per line <ul><li>Empty lines will be ignored</li><li>Words will be trimmed</li></ul>">?</span>
+        </h1>
         <textarea id="batch-add" class="form-control" rows=2></textarea>
         <div class="btn-bar">
           <button id="batch-add-btn" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i></button>
         </div>
-        <div >Count: <span id="total-count"></span></div>
       </div>
 
       <div class="col-md-9">
-        <h3 id="word-display"></h3>
+        <h3 id="word-display" class="selectable"></h3>
       </div>
 
       <div class="col-md-9">
@@ -56,6 +59,13 @@
 
       </div>
 
+    </div>
+
+
+    <div id="footer">
+      <span>Total word count: <span id="total-count"></span></span>
+      <span class="separator"></span>
+      <span>aaa</span>
     </div>
   </div>
 

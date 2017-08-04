@@ -1,11 +1,22 @@
 @light: #ededed;
 @margin-bottom: 10px;
 @dark-font-color: #343434;
+@dark-border-color: #222222;
+@not-so-light-font: #aaaaaa;
+@body-background-color: #2d333c;
+@tooltip-background-color: #080808;
 
 body {
-  background-color: #2d333c;
+  background-color: @body-background-color;
   color: @light;
   font-family:'メイリオ',Meiryo,sans-serif;
+  user-select: none;
+  cursor: default;
+}
+
+.selectable {
+  user-select: text;
+  cursor: default;
 }
 
 canvas {
@@ -15,12 +26,13 @@ canvas {
 }
 
 canvas.drawable {
-  cursor: crosshair;  
+  cursor: crosshair;
 }
 
 textarea {
   background-color: @light!important;
   margin-bottom: @margin-bottom;
+  resize: none;
 }
 
 .nice-title {
@@ -29,15 +41,52 @@ textarea {
   text-transform: uppercase;
 }
 
+.btn {
+  border: 0;
+  padding: 10px 20px;
+}
+
 .btn-bar {
   margin-bottom: @margin-bottom;
 }
 
 .btn-primary {
-  background-color: #256685;
+  background-color: #637396;
+  color: @light;
 }
 
-.btn-secondary {
-  background-color: #aaaaaa;
-  color: @dark-font-color;
+.btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
+  background-color: #999999;
+  color: @light;
+}
+
+span.question {
+  cursor: pointer;
+  line-height: 16px;
+  font-size: 15px;
+  padding: 10px;
+}
+
+.separator{
+  margin-right: 20px;
+}
+
+div.tooltip-inner {
+    margin-bottom: 6px;
+    width: 300px;
+    text-align: left;
+    background-color: @tooltip-background-color;
+    font-size: 14px;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 20px;
+  border-top: 1px solid @dark-border-color;
+  background-color: @body-background-color;
+  color: @not-so-light-font;
+  height: 50px;
 }
