@@ -58,6 +58,14 @@ module.exports.tryAnswer = function(response, callback){
 
 }
 
+
+module.exports.notNow = function(callback){
+  db.updateWordSchedule(currentWord._id, 80, module.exports.getNextWord, { fromNow: true });
+  $.notify("(´・ω・｀)", "success");
+  callback();
+}
+
+
 $(document).ready(function(){
   module.exports.getNextWord();
 

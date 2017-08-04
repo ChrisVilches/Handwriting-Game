@@ -24,38 +24,36 @@
   <link rel="stylesheet" href="build/styles.css">
 </head>
 <body>
-
-  <div class="container">
+  <div class="container whole-page">
 
     <div class="row">
 
-      <div class="col-md-3">
+      <div class="col-xs-3 sidebar">
         <h1 class="nice-title">
           Batch add
-          <span class="question" data-toggle="tooltip" data-placement="right" data-html="true" title="One word per line <ul><li>Empty lines will be ignored</li><li>Words will be trimmed</li></ul>">?</span>
+          <span class="question" data-toggle="tooltip" data-placement="bottom" title="One word per line">?</span>
         </h1>
         <textarea id="batch-add" class="form-control" rows=2></textarea>
         <div class="btn-bar">
-          <button id="batch-add-btn" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i></button>
+          <button id="batch-add-btn" class="btn btn-primary" style="display: none;"><i class="glyphicon glyphicon-ok"></i></button>
         </div>
       </div>
 
-      <div class="col-md-9">
+      <div class="col-xs-9">
         <h3 id="word-display" class="selectable"></h3>
-      </div>
-
-      <div class="col-md-9">
 
         <canvas id='canvas-main' width='600' height='500' class="drawable" style="border:2px solid;"></canvas>
         <canvas id='canvas-mirror' style="border: 2px solid; display: none;"></canvas>
 
         <div class="btn-bar">
-          <button id="canvas-answer" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i></button>
-          <button id="canvas-get" class="btn btn-primary"><i class="glyphicon glyphicon-download-alt"></i></button>
-          <button id="canvas-clear" class="btn btn-secondary"><i class="glyphicon glyphicon-remove"></i></button>
+          <button id="canvas-answer" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Answer"><i class="glyphicon glyphicon-ok"></i></button>
+          <button id="canvas-get" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Show results"><i class="glyphicon glyphicon-eye-open"></i></button>
+          <button id="canvas-not-now" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Pass (I don't want to answer it now)"><i class="glyphicon glyphicon-time"></i></button>
+          <button id="canvas-clear" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Clear canvas"><i class="glyphicon glyphicon-remove"></i></button>
         </div>
 
-        <div id="result" style="font-size: 30px;"></div>
+
+        <div id="result"></div>
 
       </div>
 

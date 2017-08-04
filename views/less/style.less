@@ -1,10 +1,11 @@
 @light: #ededed;
-@margin-bottom: 10px;
+@margin-bottom: 15px;
 @dark-font-color: #343434;
 @dark-border-color: #222222;
 @not-so-light-font: #aaaaaa;
 @body-background-color: #2d333c;
 @tooltip-background-color: #080808;
+@highlight-background-color: #3d434c;
 
 body {
   background-color: @body-background-color;
@@ -12,6 +13,19 @@ body {
   font-family:'メイリオ',Meiryo,sans-serif;
   user-select: none;
   cursor: default;
+  overflow: hidden;
+}
+
+.whole-page, .container {
+  margin: 0;
+  min-width: 970px;
+  width: 100%;
+}
+
+.sidebar {
+  border: 1px solid @dark-border-color;
+  height: 100%;
+  max-width: 200px;
 }
 
 .selectable {
@@ -71,12 +85,20 @@ span.question {
   margin-right: 20px;
 }
 
-div.tooltip-inner {
-    margin-bottom: 6px;
-    width: 300px;
-    text-align: left;
-    background-color: @tooltip-background-color;
-    font-size: 14px;
+
+#word-display{
+  font-size: 30px;
+}
+
+.single-result {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.single-result:hover {
+  border-radius: 5px;
+  background-color: @highlight-background-color;
 }
 
 #footer {

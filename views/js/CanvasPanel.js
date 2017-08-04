@@ -62,10 +62,15 @@ $(document).ready(function(){
 
 
     }, e => { console.log("Error:", e); });
-
-
-
   });
+
+
+  $("#canvas-not-now").click(function(){
+    ShowRep.notNow(function(){
+      canvas.clear();
+    });
+  });
+
 
   $("#canvas-get").click(function(){
     var lines = canvas.getLines();
@@ -73,7 +78,7 @@ $(document).ready(function(){
 
       $("#result").html('');
       for(i in data){
-        $("#result").append(data[i] + ', ');
+        $("#result").append('<span class="single-result">' + data[i] + '</span>');
       }
 
     }, e => { console.log("Error:", e); });

@@ -15,6 +15,7 @@ $(document).ready(function(){
 
   function collapseTextarea(){
     $('#batch-add').animate({ height: textareaInitHeight }, 100);
+    $('#batch-add-btn').hide();
   }
 
   var textareaInitHeight = $('#batch-add').height();
@@ -24,6 +25,7 @@ $(document).ready(function(){
 
   $('#batch-add').click(function(){
     $('#batch-add').animate({ height: textareaLargeHeight }, 100);
+    $('#batch-add-btn').show();
   });
 
   $('#batch-add').on('focusout', function(){
