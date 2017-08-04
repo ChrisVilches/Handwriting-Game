@@ -11,7 +11,6 @@ describe("Find queries", function(){
     }));
   });
 
-
   it("gets nearest words correctly 1", function(done) {
     db.getNearestWords(3, function(err, docs){
       expect(err).toEqual(null);
@@ -38,6 +37,7 @@ describe("Find queries", function(){
       done();
     });
   }, 1000);
+
 
   it("gets scheduled for now (or another date) 1", function(done) {
     db.getScheduledForNow(function(err, docs){
@@ -68,30 +68,12 @@ describe("Find queries", function(){
     });
   }, 1000);
 
-  it("gets docs sorted by rep count 1", function(done) {
-    db.getLeastReps(3, function(err, docs){
+  it("get random (least reps)", function(done) {
+    db.getRandomLeastRep(function(err, doc){
       expect(err).toEqual(null);
-      expect(docs.length).toEqual(3);
-      expect(docs[0].word).toEqual('想像');
-      expect(docs[1].word).toEqual('嗚呼');
-      expect(docs[2].word).toEqual('日本');
+      expect(doc.word).toEqual('想像');
       done();
-    });
-  }, 1000);
-
-  it("gets docs sorted by rep count 2", function(done) {
-    db.getLeastReps(7, function(err, docs){
-      expect(err).toEqual(null);
-      expect(docs.length).toEqual(7);
-      expect(docs[0].word).toEqual('想像');
-      expect(docs[1].word).toEqual('嗚呼');
-      expect(docs[2].word).toEqual('日本');
-      expect(docs[3].word).toEqual('喋');
-      expect(docs[4].word).toEqual('超');
-      expect(docs[5].word).toEqual('猫');
-      expect(docs[6].word).toEqual('不思議');
-      done();
-    });
+    }, 200);
   }, 1000);
 
 });

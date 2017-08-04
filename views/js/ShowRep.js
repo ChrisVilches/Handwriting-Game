@@ -26,13 +26,13 @@ var ways = [
   },
 
   function(){
-    db.getLeastReps(20, function(err, docs){
+    db.getRandomLeastRep(function(err, doc){
       if(err){
         $.notify(err, "warn");
         return;
       }
-      console.log("Using least reps")
-      setCurrentWord(getRandomElement(docs));
+      console.log("Using least reps (reps: " + doc.repCount + ")")
+      setCurrentWord(doc);
     });
   }
 ];
@@ -48,12 +48,11 @@ module.exports.getNextWord = function(){
     }
 
     if(docs.length == 0){
-      console.log("No docs are scheduled for now");
       getRandomElement(ways)();
-
     } else {
-      console.log("Scheduled for now");
-      setCurrentWord(getRandomElement(docs));
+      var doc = getRandomElement(docs);
+      console.log("Scheduled for now (date: " + doc.nextRep + ")");
+      setCurrentWord(doc);
     }
 
   });

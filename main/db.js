@@ -4,9 +4,20 @@ const _ = require('lodash');
 
 var ds = null;
 
+// Random number with a distribution where lower numbers (close to 0)
+// are more prone to appear.
+function randomLow(iMax){
+  if(!iMax){
+    iMax = 5;
+  }
+  var r = Math.random();
+  for(var i=0; i<iMax; i++)
+    r = Math.min(r, Math.random());
+  return r;
+}
+
 function getDS(){
   if(ds == null){
-    //console.log("Starting DB...");
     ds = new Datastore({
   		filename: dbFileName,
   		autoload: true,
@@ -17,8 +28,6 @@ function getDS(){
         console.log(err);
       }
     });
-  } else {
-    //console.log("DB is already open.");
   }
   return ds;
 }
@@ -50,9 +59,11 @@ module.exports = {
     getDS().insert(objs, callback);
   },
 
+
   getNearestWords: function(n, callback){
     getDS().find({ }).sort({ nextRep: 1 }).limit(n).exec(callback);
   },
+
 
   rescheduleDoc: function(doc, score, options = {}){
 
@@ -84,8 +95,17 @@ module.exports = {
     getDS().find({ nextRep: { $lt: date } }).sort({ nextRep: 1 }).exec(callback);
   },
 
-  getLeastReps: function(n, callback){
-    getDS().find({}).sort({ repCount: 1}).limit(n).exec(callback);
+  getRandomLeastRep: function(callback, randomWeight = null){
+    getDS().count({}, function(err, count){
+      if(err || count == 0){
+        callback(err);
+      }
+
+      var skipCount = Math.floor(randomLow(randomWeight) * count);
+      getDS().find({}).sort({ repCount: 1 }).skip(skipCount).limit(1).exec(function(err2, docs){
+          callback(err2, docs[0]);
+      });
+    });
   },
 
   getRandom: function(callback){
