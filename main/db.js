@@ -84,6 +84,10 @@ module.exports = {
     getDS().find({ nextRep: { $lt: date } }).sort({ nextRep: 1 }).exec(callback);
   },
 
+  getLeastReps: function(n, callback){
+    getDS().find({}).sort({ repCount: 1}).limit(n).exec(callback);
+  },
+
   getRandom: function(callback){
     getDS().count({}, function (err, count) {
       if (!err && count > 0) {

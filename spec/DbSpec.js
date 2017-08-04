@@ -161,9 +161,9 @@ describe("Database", function() {
 
       doc.nextRep = new Date();
       doc.nextRep.setSeconds(doc.nextRep.getSeconds() + 1);
-      first = doc.nextRep.getTime();
+      first = doc.nextRep.toString();
       newDoc = db.rescheduleDoc(doc, 100);
-      expect(newDoc.nextRep.getTime()).toEqual(first);
+      expect(newDoc.nextRep.toString()).toEqual(first);
 
     });
 
@@ -172,9 +172,9 @@ describe("Database", function() {
 
       doc.nextRep = new Date();
       doc.nextRep.setSeconds(doc.nextRep.getSeconds());
-      first = doc.nextRep.getTime();
+      first = doc.nextRep.toString();
       newDoc = db.rescheduleDoc(doc, 100);
-      expect(newDoc.nextRep.getTime()).toEqual(first);
+      expect(newDoc.nextRep.toString()).toEqual(first);
 
     });
 
@@ -182,9 +182,10 @@ describe("Database", function() {
       var first, newDoc;
       doc.nextRep = new Date();
       doc.nextRep.setSeconds(doc.nextRep.getSeconds() - 1); // one second less than it should
-      first = doc.nextRep.getTime();
+      first = new Date(doc.nextRep);
+      first.setSeconds(first.getSeconds() + (86400 * 2));
       newDoc = db.rescheduleDoc(doc, 100);
-      expect(newDoc.nextRep.getTime()).toEqual(first + (86400000 * 2)); // milliseconds
+      expect(newDoc.nextRep.toString()).toEqual(first.toString()); // milliseconds
     });
 
     it("last rep date gets updated correctly", function() {
@@ -258,6 +259,32 @@ describe("Database", function() {
       db.getRandom(function(err, doc){
         expect(err).toEqual(null);
         expect(doc.word != '').toEqual(true);
+        done();
+      });
+    }, 1000);
+
+    it("gets docs sorted by rep count 1", function(done) {
+      db.getLeastReps(3, function(err, docs){
+        expect(err).toEqual(null);
+        expect(docs.length).toEqual(3);
+        expect(docs[0].word).toEqual('想像');
+        expect(docs[1].word).toEqual('嗚呼');
+        expect(docs[2].word).toEqual('日本');
+        done();
+      });
+    }, 1000);
+
+    it("gets docs sorted by rep count 2", function(done) {
+      db.getLeastReps(7, function(err, docs){
+        expect(err).toEqual(null);
+        expect(docs.length).toEqual(7);
+        expect(docs[0].word).toEqual('想像');
+        expect(docs[1].word).toEqual('嗚呼');
+        expect(docs[2].word).toEqual('日本');
+        expect(docs[3].word).toEqual('喋');
+        expect(docs[4].word).toEqual('超');
+        expect(docs[5].word).toEqual('猫');
+        expect(docs[6].word).toEqual('不思議');
         done();
       });
     }, 1000);
