@@ -34,6 +34,18 @@ function getDS(){
         console.log(err);
       }
     });
+
+    ds.ensureIndex({ fieldName: 'nextRep' }, function(err){
+      if(err){
+        console.log(err);
+      }
+    });
+
+    ds.ensureIndex({ fieldName: 'repCount' }, function(err){
+      if(err){
+        console.log(err);
+      }
+    });
   }
   return ds;
 }
@@ -119,7 +131,7 @@ module.exports = {
 
       if(err || count == 0){
         callback(err);
-      }     
+      }
 
       // skip a random number between 0 to count-1
       var skipCount = Math.floor(Math.random() * count);
