@@ -13,7 +13,9 @@ module.exports = {
     return configObj.autoDict;
   },
 
-  dataDir: '.data'
+  dataDir: '.data',
+
+  icon: path.join(__dirname, '../icons/icon.ico')
 };
 
 var pathConfigJson = path.join(module.exports.dataDir, 'config.json');

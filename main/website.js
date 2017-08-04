@@ -1,5 +1,6 @@
 const electron = require('electron');
 const BrowserWindow = electron.BrowserWindow;
+const config = require('./config');
 
 var dictionaryWindow = null;
 
@@ -12,7 +13,7 @@ function showFocus(){
 
 function ensureWindowIsOpen(){
   if(dictionaryWindow == null){
-    dictionaryWindow = new BrowserWindow({ width: 500, height: 600 });
+    dictionaryWindow = new BrowserWindow({ width: 500, height: 600, icon: config.icon });
     dictionaryWindow.on('closed', () => { dictionaryWindow = null; });
     dictionaryWindow.on('did-finish-load', showFocus);
   }
