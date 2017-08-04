@@ -17,6 +17,8 @@ gulp.task('less', function() {
     .pipe(gulp.dest('views/build'));
 });
 
+gulp.task('build', ['less']);
+
 gulp.task('watch', function() {
   gulp.watch(paths.less, ['less']);
 });

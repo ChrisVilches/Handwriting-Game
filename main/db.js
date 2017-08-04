@@ -1,5 +1,8 @@
 const Datastore = require('nedb');
-const dbFileName = '.data/data.db';
+const fs = require('fs');
+const path = require('path');
+const dbDir = '.data';
+const dbFileName = 'data.db';
 const _ = require('lodash');
 
 var ds = null;
@@ -18,8 +21,11 @@ function randomLow(iMax){
 
 function getDS(){
   if(ds == null){
+    if (!fs.existsSync(dbDir)){
+      fs.mkdirSync(dbDir);
+    }
     ds = new Datastore({
-  		filename: dbFileName,
+  		filename: path.join(dbDir, dbFileName),
   		autoload: true,
   		timestampData: true
   	});
