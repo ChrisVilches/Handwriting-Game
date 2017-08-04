@@ -5,8 +5,19 @@ const InputService = require('./InputService');
 var currentWord = null;
 
 function setCurrentWord(doc){
+
+  if(!doc){
+    currentWord = null;
+    $('#word-display').html('');
+    $('#canvas-answer').prop('disabled', true);
+    $('#canvas-not-now').prop('disabled', true);
+    return;
+  }
+
   currentWord = doc;
   $('#word-display').html(doc.word);
+  $('#canvas-answer').prop('disabled', false);
+  $('#canvas-not-now').prop('disabled', false);
 }
 
 function getRandomElement(array){
@@ -22,10 +33,9 @@ var ways = [
         return;
       }
 
-      if(!doc)
-        return;
-
-      console.log("Using a random doc")
+      if(doc){
+        console.log("Using a random doc");
+      }
       setCurrentWord(doc);
     });
   },
@@ -37,10 +47,10 @@ var ways = [
         return;
       }
 
-      if(!doc)
-        return;
+      if(doc){
+        console.log("Using least reps (reps: " + doc.repCount + ")");
+      }
 
-      console.log("Using least reps (reps: " + doc.repCount + ")")
       setCurrentWord(doc);
     });
   }
@@ -65,12 +75,6 @@ module.exports.getNextWord = function(){
   });
 }
 
-
-module.exports.hasWordToAnswer = function(){
-  return currentWord != null;
-}
-
-
 module.exports.tryAnswer = function(response, callback){
 
   if(currentWord.word == response){
@@ -82,9 +86,7 @@ module.exports.tryAnswer = function(response, callback){
     $.notify("(T_T) " + currentWord.word + " ≠ " + response, "warn");
     callback(false);
   }
-
 }
-
 
 module.exports.notNow = function(callback){
   db.updateWordSchedule(currentWord._id, 50, module.exports.getNextWord, { fromNow: true });

@@ -116,14 +116,18 @@ module.exports = {
 
   getRandom: function(callback){
     getDS().count({}, function (err, count) {
-      if (!err && count > 0) {
-        // skip a random number between 0 to count-1
-        var skipCount = Math.floor(Math.random() * count);
 
-        getDS().find({}).skip(skipCount).limit(1).exec(function(err2, docs) {
-          callback(err2, docs[0]);
-        });
-      }
+      if(err || count == 0){
+        callback(err);
+      }     
+
+      // skip a random number between 0 to count-1
+      var skipCount = Math.floor(Math.random() * count);
+
+      getDS().find({}).skip(skipCount).limit(1).exec(function(err2, docs) {
+        callback(err2, docs[0]);
+      });
+
     });
   },
 

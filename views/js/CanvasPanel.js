@@ -62,12 +62,6 @@ $(document).ready(function(){
   });
 
   $("#canvas-answer").click(function(){
-
-    if(!ShowRep.hasWordToAnswer()){
-      $.notify("No words!", "info");
-      return;
-    }
-
     var lines = canvas.getLines();
     service.getCharacters(lines, data => {
 
@@ -83,10 +77,6 @@ $(document).ready(function(){
 
 
   $("#canvas-not-now").click(function(){
-    if(!ShowRep.hasWordToAnswer()){
-      $.notify("No words!", "info");
-      return;
-    }
     ShowRep.notNow(function(){
       canvas.clear();
     });

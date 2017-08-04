@@ -167,7 +167,6 @@ describe("rescheduler", function(){
     var first, newDoc;
 
     doc.nextRep = new Date();
-    doc.nextRep.setSeconds(doc.nextRep.getSeconds());
     first = doc.nextRep.toString();
     newDoc = db.rescheduleDoc(doc, 100);
     expect(newDoc.nextRep.toString()).toEqual(first);
@@ -184,7 +183,7 @@ describe("rescheduler", function(){
     expect(newDoc.nextRep.toString()).toEqual(first.toString()); // milliseconds
   });
 
-  
+
 
   it("last rep date gets updated correctly", function() {
     var now = new Date();
