@@ -58,6 +58,7 @@ $(document).ready(function(){
       if($('input:focus, textarea:focus').length > 0)
         return;
       canvas.undo();
+      e.preventDefault();
     }
   });
 
