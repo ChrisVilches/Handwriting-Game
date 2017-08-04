@@ -50,6 +50,10 @@ class InputService {
       contentType: "application/json",
       data: JSON.stringify(data),
       success: function(res){
+        if(typeof res[1] === 'undefined'){
+          error(res);
+          return;
+        }          
         success(res[1][0][1]);
       },
       error: error
