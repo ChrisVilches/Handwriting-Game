@@ -1,4 +1,5 @@
 const electron = require('electron');
+const Website = electron.remote.require('./website');
 const db = electron.remote.require('./db');
 const InputService = require('./InputService');
 
@@ -12,6 +13,10 @@ function setCurrentWord(doc){
     $('#canvas-answer').prop('disabled', true);
     $('#canvas-not-now').prop('disabled', true);
     return;
+  }
+
+  if(currentWord == null || currentWord.word != doc.word){
+    Website.googleWord(doc.word);
   }
 
   currentWord = doc;

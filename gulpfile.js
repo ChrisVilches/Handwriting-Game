@@ -6,15 +6,16 @@ var uglify = require('gulp-uglify');
 
 var paths = {
   js: 'views/js/**/*',
-  less: 'views/less/**/*'
+  less: 'views/less/**/*',
+  lessImporter: 'views/less/main.less',
+  build: 'views/build'
 };
 
 gulp.task('less', function() {
-  return gulp.src(paths.less)
-    .pipe(concat('styles'))
+  return gulp.src(paths.lessImporter)
     .pipe(less())
     .pipe(cssmin())
-    .pipe(gulp.dest('views/build'));
+    .pipe(gulp.dest(paths.build));
 });
 
 gulp.task('build', ['less']);
