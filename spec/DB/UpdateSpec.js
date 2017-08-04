@@ -7,13 +7,13 @@ describe("Database", function() {
     var fs = require('fs');
 
     afterAll(function(){
-      fs.unlinkSync('spec/mock.temp.db');
+      fs.unlinkSync('spec/DB/mock.temp.db');
     });
 
     beforeEach(function(){
-      fs.writeFileSync('spec/mock.temp.db', fs.readFileSync('spec/mock.db'));
+      fs.writeFileSync('spec/DB/mock.temp.db', fs.readFileSync('spec/DB/mock.db'));
       db.setDS(new Datastore({
-        filename: 'spec/mock.temp.db',
+        filename: 'spec/DB/mock.temp.db',
         autoload: true,
         timestampData: true
       }));

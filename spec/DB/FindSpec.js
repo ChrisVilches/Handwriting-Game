@@ -5,7 +5,7 @@ describe("Find queries", function(){
 
   beforeAll(function(){
     db.setDS(new Datastore({
-      filename: 'spec/mock.db',
+      filename: 'spec/DB/mock.db',
       autoload: true,
       timestampData: true
     }));
