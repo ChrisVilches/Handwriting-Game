@@ -12,7 +12,7 @@
   const ipcRenderer = require('electron').ipcRenderer;
   ipcRenderer.on('toggle-debug-canvas', function(){ $('#canvas-mirror').toggle() });
   require('./js/sidebar/BatchAdd');
-  require('./js/sidebar/Config');
+  require('./js/sidebar/ConfigMenu');
   require('./js/ShowRep');
   require('./js/CanvasPanel');
   $(document).ready(() => { $('[data-toggle="tooltip"]').tooltip() });
@@ -25,9 +25,11 @@
   <link rel="stylesheet" href="build/main.css"/>
 </head>
 <body>
-  <div class="container whole-page">
+  <div class="container main-container">
     <div class="row">
-      <div class="col-xs-3 sidebar">
+      <div class="col-xs-3">
+
+        <!-- Add words -->
         <h1 class="nice-title">
           Batch add
           <span class="question" data-toggle="tooltip" data-placement="bottom" title="One word per line">?</span>
@@ -38,22 +40,60 @@
         </div>
 
 
-        <form class="form-horizontal" role="form">
+        <!-- Auto dictionary switch -->
+        <label class="form-block" for="auto-dict-switch" data-toggle="tooltip" data-placement="right" title="Open (or reload) a dictionary window every time a new word appears">
 
-          <!-- Auto dictionary switch -->
-          <div class="form-group" data-toggle="tooltip" data-placement="right" title="Open (or reload) a dictionary window every time a new word appears">
-            <label for="auto-dict-switch" class="col-xs-6 control-label">Auto-dict</label>
-            <div class="col-xs-6">
-              <label class="switch">
-                <input type="checkbox" id="auto-dict-switch">
-                <span class="slider round"></span>
-              </label>
-            </div>
+          <span class="form-block-element">Auto-dict</span>
+
+          <div class="form-block-element">
+            <label class="switch">
+              <input type="checkbox" id="auto-dict-switch">
+              <span class="slider round"></span>
+            </label>
           </div>
+        </label>
 
-        </form>
 
+        <!-- Form examples -->
+        <!--
+        <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
 
+          <span class="form-block-element">Another switch</span>
+
+          <div class="form-block-element">
+            <label class="switch">
+              <input type="checkbox">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </label>
+
+        <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
+          <span class="form-block-element">Input</span>
+          <div class="form-block-element">
+            <input type="text" class="form-control"/>
+          </div>
+        </label>
+
+        <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
+          <span class="form-block-element">Select</span>
+          <div class="form-block-element">
+            <select class="form-control">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+            </select>
+          </div>
+        </label>
+
+        <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
+          <span class="form-block-element">Long long long long long label label label</span>
+          <div class="form-block-element">
+            <input type="text" class="form-control"/>
+          </div>
+        </label>
+      -->
 
 
       </div>

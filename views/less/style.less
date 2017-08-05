@@ -7,16 +7,16 @@ body {
   overflow: hidden;
 }
 
-.whole-page, .container {
+.main-container {
   margin: 0;
-  min-width: 970px;
-  width: 100%;
+  width: 970px;
 }
 
 .sidebar {
   border: 1px solid @dark-border-color;
   height: 100%;
-  max-width: 200px;
+  width: 250px;
+  background-color: red;
 }
 
 .selectable {
@@ -35,35 +35,10 @@ canvas.drawable {
   border: 1px solid @dark-border-color;
 }
 
-textarea {
-  background-color: @light!important;
-  margin-bottom: @margin-bottom;
-  resize: none;
-}
-
 .nice-title {
   font-weight: bold;
   font-size: 20px;
   text-transform: uppercase;
-}
-
-.btn {
-  border: 0;
-  padding: 10px 20px;
-}
-
-.btn-bar {
-  margin-bottom: @margin-bottom;
-}
-
-.btn-primary {
-  background-color: @btn-primary-color;
-  color: @light;
-}
-
-.btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
-  background-color: @btn-secondary-color;
-  color: @light;
 }
 
 span.question {
