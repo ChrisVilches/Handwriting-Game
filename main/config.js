@@ -5,7 +5,6 @@ module.exports = {
 
   setAutoDict: function(bool){
     configObj.autoDict = bool;
-    console.log("Saving config...");
     saveConfigJson();
   },
 
@@ -22,7 +21,8 @@ var pathConfigJson = path.join(module.exports.dataDir, 'config.json');
 var configObj = {};
 
 function saveConfigJson(){
-  fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
+  console.log("Saving config...");
+  fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));  
 }
 
 

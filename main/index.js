@@ -14,7 +14,7 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {console.log(__dirname + '../icon.ico')
 
-	var mainWindow = new BrowserWindow({width: 1300, height: 800, icon: config.icon });
+	var mainWindow = new BrowserWindow({width: 750, height: 800, icon: config.icon });
 	mainWindow.loadURL(path.join('file://', __dirname, '../views/index.html'));
 	require('./menu');
 
