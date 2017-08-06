@@ -12,7 +12,7 @@ npm run test
 npm run dev
 ```
 
-Construir el paquete con estos comandos.
+Construir el paquete con estos comandos. Considerar que necesita `electron-packager` instalado globalmente.
 
 ```bash
 npm run package-linux
