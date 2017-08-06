@@ -1,17 +1,8 @@
 const electron = require('electron');
 const db = electron.remote.require('./db');
+const Footer = require('../Footer');
 
 $(document).ready(function(){
-
-  function updateTotalCount(){
-    db.getTotalCount(function(err, count){
-      if(err){
-        $.notify(err, "warn");
-        return;
-      }
-      $("#total-count").html(count);
-    });
-  }
 
   function collapseTextarea(){
     $('#batch-add').animate({ height: textareaInitHeight }, 100);
@@ -20,8 +11,6 @@ $(document).ready(function(){
 
   var textareaInitHeight = $('#batch-add').height();
   var textareaLargeHeight = textareaInitHeight + 150;
-  updateTotalCount();
-
 
   $('#batch-add').click(function(){
     $('#batch-add').animate({ height: textareaLargeHeight }, 100);
@@ -53,7 +42,7 @@ $(document).ready(function(){
 
       $.notify("Added " + newDocs.length + " words.", "success");
       collapseTextarea();
-      updateTotalCount();
+      Footer.updateTotalCount();
       $('#batch-add').val('');
 
 

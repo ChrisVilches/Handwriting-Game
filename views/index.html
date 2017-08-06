@@ -15,6 +15,7 @@
   require('./js/sidebar/ConfigMenu');
   var ShowRep = require('./js/ShowRep');
   require('./js/CanvasPanel');
+  require('./js/Footer');
   $(document).ready(() => { $('[data-toggle="tooltip"]').tooltip() });
   </script>
 
@@ -135,7 +136,8 @@
     <div id="footer">
       <span>Total word count: <span id="total-count"></span></span>
       <span class="separator"></span>
-      <span><!-- ... --></span>
+      <span>Scheduled: <span id="scheduled-count"></span></span>
+      
     </div>
   </div>
 
