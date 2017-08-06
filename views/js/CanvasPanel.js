@@ -84,8 +84,7 @@ $(document).ready(function(){
     service.getCharacters(lines, data => {
 
       if(data == null || data.length == 0) return;
-      var answer = data[0];
-      ShowRep.tryAnswer(answer, function(success){
+      ShowRep.tryAnswer(data, function(success){
         canvas.clear();
       });
 

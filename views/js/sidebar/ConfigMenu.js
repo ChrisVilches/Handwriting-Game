@@ -8,6 +8,7 @@ $(document).ready(function(){
 
   $('#auto-dict-switch').prop('checked', config.getAutoDict());
   $('#hide-switch').prop('checked', config.getHide());
+  $('#easiness-input').val(config.getEasiness());
 
   $('#auto-dict-switch').click(function(){
     var checked = $('#auto-dict-switch').prop('checked');
@@ -25,6 +26,11 @@ $(document).ready(function(){
     } else if(!CanvasPanel.canvasEmpty()){
       ShowRep.hideWord();
     }
+  });
+
+  $('#easiness-input').on('change', function(){
+    var num = $('#easiness-input').val();
+    config.setEasiness(num);
   });
 
 

@@ -163,6 +163,12 @@ module.exports = {
 
   updateWordSchedule: function(wordId, score, callback, options = {}){
 
+    if(isNaN(score)){
+      throw new Error("Score is NaN");
+    }
+
+    score = Number(score);
+
     if(score < 0 || score > 100){
       throw new Error('Score must be 0-100 inclusive.');
     }

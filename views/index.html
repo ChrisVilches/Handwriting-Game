@@ -70,19 +70,18 @@
         </label>
 
 
-        <!-- Form examples -->
-        <!--
-        <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
+        <label class="form-block" data-toggle="tooltip" data-placement="right" title="How many results compare the word to (e.g. if the value is 1, only the first result will be used as the possible answer)">
 
-          <span class="form-block-element">Another switch</span>
+          <span class="form-block-element">Easiness</span>
 
           <div class="form-block-element">
-            <label class="switch">
-              <input type="checkbox">
-              <span class="slider round"></span>
-            </label>
+            <input type="number" class="form-control" id="easiness-input" min=1 max=10>
           </div>
         </label>
+
+
+        <!-- Form examples -->
+        <!--
 
         <label class="form-block" data-toggle="tooltip" data-placement="right" title="Tooltip message">
           <span class="form-block-element">Input</span>
@@ -137,7 +136,7 @@
       <span>Total word count: <span id="total-count"></span></span>
       <span class="separator"></span>
       <span>Scheduled: <span id="scheduled-count"></span></span>
-      
+
     </div>
   </div>
 

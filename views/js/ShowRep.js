@@ -3,6 +3,8 @@ const website = electron.remote.require('./website');
 const config = electron.remote.require('./config');
 const db = electron.remote.require('./db');
 const InputService = require('./InputService');
+const Footer = require('./Footer');
+const lib = electron.remote.require('./lib');
 
 var currentWord = null;
 
@@ -84,6 +86,9 @@ var ways = [
 
 
 module.exports.getNextWord = function(){
+
+  Footer.updateScheduledCount();
+
   db.getScheduledForNow(function(err, docs){
 
     if(err){
@@ -101,21 +106,46 @@ module.exports.getNextWord = function(){
   });
 }
 
+
 module.exports.tryAnswer = function(response, callback){
 
-  if(currentWord.word == response){
-    db.updateWordSchedule(currentWord._id, 100, module.exports.getNextWord, { fromNow: true });
-    $.notify("(^_^) " + currentWord.word + " = " + response, "success");
+  var i;
+  var correct = false;
+
+  for(i=0; i<response.length && i<config.getEasiness(); i++){
+    if(currentWord.word == response[i]){
+      correct = true;
+      break;
+    }
+  }
+
+  // Get N first elements
+  response.splice(config.getEasiness());
+
+  if(correct){
+
+    var score = correct ? lib.calculateScore(
+      config.lowestScore,
+      config.highestScore,
+      config.getEasiness(),
+      i) : config.lowestScore;
+
+    console.assert(score >= config.lowestScore);
+    console.assert(score <= config.highestScore);
+
+    db.updateWordSchedule(currentWord._id, score, module.exports.getNextWord, { fromNow: true });
+    $.notify("(^_^) " + currentWord.word + " = " + response[i] + " (i: " + i + ")", "success");
+    console.log("Correct answer (score: "+score+", max score: "+config.highestScore+", lowest: "+config.lowestScore+", i: "+i+", easiness: "+config.getEasiness()+")");
     callback(true);
   } else {
-    db.updateWordSchedule(currentWord._id, 25, module.exports.getNextWord, { fromNow: true });
+    db.updateWordSchedule(currentWord._id, config.lowestScore, module.exports.getNextWord, { fromNow: true });
     $.notify("(T_T) " + currentWord.word + " ≠ " + response, "warn");
     callback(false);
   }
 }
 
 module.exports.notNow = function(callback){
-  db.updateWordSchedule(currentWord._id, 50, module.exports.getNextWord, { fromNow: true });
+  db.updateWordSchedule(currentWord._id, config.passScore, module.exports.getNextWord, { fromNow: true });
   $.notify("(´・ω・｀)", "success");
   callback();
 }

@@ -12,28 +12,55 @@ module.exports = {
     return configObj.autoDict;
   },
 
+  setHide: function(bool){
+    configObj.hide = bool;
+    saveConfigJson();
+  },
+
   getHide: function(){
     return configObj.hide;
   },
 
-  setHide: function(bool){
-    configObj.hide = bool;
-    saveConfigJson();
+  setEasiness: function(number){
+    configObj.easiness = number;
+    saveConfigJson(true);
+  },
+
+  getEasiness: function(){
+    return configObj.easiness;
   },
 
   dataDir: '.data',
 
   hiddenText: '・・・',
 
+  lowestScore: 25,
+
+  highestScore: 100,
+
+  passScore: 50,
+
   icon: path.join(__dirname, '../icons/icon64x64.png')
 };
 
 var pathConfigJson = path.join(module.exports.dataDir, 'config.json');
 var configObj = {};
+var saveTimer = null;
 
-function saveConfigJson(){
-  console.log("Saving config...");
-  fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
+function saveConfigJson(timer = false){
+
+  clearTimeout(saveTimer);
+
+  var write = () => {
+    console.log("Saving config...");
+    fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
+  };
+
+  if(timer){
+    saveTimer = setTimeout(write, 1500);
+  } else {
+    write();
+  }
 }
 
 
@@ -45,7 +72,8 @@ function saveConfigJson(){
   if(!fs.existsSync(pathConfigJson)){
     configObj = {
       autoDict: false,
-      hide: false
+      hide: false,
+      easiness: 2
     };
     fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
   } else {
