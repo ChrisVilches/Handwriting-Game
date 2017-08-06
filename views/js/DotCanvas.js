@@ -40,6 +40,10 @@ class DotCanvas {
       this.period = options.period;
   }
 
+  isEmpty(){
+    return this.lines.length == 0;
+  }
+
   getLines(){
     return this.lines;
   }

@@ -1,3 +1,5 @@
+@word-display-font-size: 30px;
+
 body {
   background-color: @body-background-color;
   color: @light;
@@ -16,6 +18,11 @@ body {
 .selectable {
   user-select: text;
   cursor: default;
+}
+
+.hidden-word {
+  color: @btn-secondary-color;
+  font-size: @word-display-font-size;
 }
 
 canvas {
@@ -48,7 +55,7 @@ span.question {
 
 
 #word-display{
-  font-size: 30px;
+  font-size: @word-display-font-size;
 }
 
 .single-result {

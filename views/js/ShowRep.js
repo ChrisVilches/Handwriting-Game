@@ -1,6 +1,6 @@
 const electron = require('electron');
-const Website = electron.remote.require('./website');
-const Config = electron.remote.require('./config');
+const website = electron.remote.require('./website');
+const config = electron.remote.require('./config');
 const db = electron.remote.require('./db');
 const InputService = require('./InputService');
 
@@ -17,8 +17,8 @@ function setCurrentWord(doc){
   }
 
   if(currentWord == null || currentWord.word != doc.word){
-    if(Config.getAutoDict()){
-      Website.googleWord(doc.word);
+    if(config.getAutoDict()){
+      website.googleWord(doc.word);
     }
   }
 
@@ -26,6 +26,8 @@ function setCurrentWord(doc){
   $('#word-display').html(doc.word);
   $('#canvas-answer').prop('disabled', false);
   $('#canvas-not-now').prop('disabled', false);
+  $('#hidden-word-display').data('bs.tooltip').options.title = doc.word;
+
 }
 
 function getRandomElement(array){
@@ -107,15 +109,18 @@ module.exports.getCurrentWord = function(){
 }
 
 module.exports.hideWord = function(){
-  $('#word-display').html('XXXX');
+  $('#word-display').hide();
+  $('#hidden-word-display').show();
 }
 
 module.exports.unHideWord = function(){
-  setCurrentWord(currentWord);
+  $('#word-display').show();
+  $('#hidden-word-display').hide();
 }
 
 
 $(document).ready(function(){
   module.exports.getNextWord();
+  $('#hidden-word-display').html(config.hiddenText);
 
 });

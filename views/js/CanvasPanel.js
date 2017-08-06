@@ -4,6 +4,10 @@ const config = require('electron').remote.require('./config');
 const ShowRep = require('./ShowRep');
 
 var squareWidth = 5;
+var canvas;
+module.exports.canvasEmpty = function(){
+  return canvas.isEmpty();
+};
 
 function copyCanvas(prettyLines, canvas){
 
@@ -22,6 +26,16 @@ function copyCanvas(prettyLines, canvas){
   }
 }
 
+
+function hideOrShow(){
+  if(config.getHide() && !canvas.isEmpty()){
+    ShowRep.hideWord();
+  } else {
+    ShowRep.unHideWord();
+  }
+}
+
+
 $(document).ready(function(){
 
   // Copy width & height
@@ -30,21 +44,18 @@ $(document).ready(function(){
 
   var canvasMirror = $('#canvas-mirror')[0];
 
-  var canvas = new DotCanvas($('#canvas-main')[0], {
+  canvas = new DotCanvas($('#canvas-main')[0], {
     period: 5,
     lineWidth: 6,
     color: "#404769"
   },
   function(){
     copyCanvas(canvas.getPrettyLines(), canvasMirror);
-    if(config.getHide() && canvas.getLines().length != 0){
-      ShowRep.hideWord();
-    } else {
-      ShowRep.unHideWord();
-    }
+    hideOrShow();
   },
   function(){
     canvasMirror.getContext("2d").clearRect(0, 0, canvasMirror.width, canvasMirror.height);
+    hideOrShow();
   });
 
 

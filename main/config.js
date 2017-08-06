@@ -23,6 +23,8 @@ module.exports = {
 
   dataDir: '.data',
 
+  hiddenText: '・・・',
+
   icon: path.join(__dirname, '../icons/icon64x64.png')
 };
 
