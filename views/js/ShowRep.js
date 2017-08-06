@@ -106,6 +106,14 @@ module.exports.getCurrentWord = function(){
   return currentWord;
 }
 
+module.exports.hideWord = function(){
+  $('#word-display').html('XXXX');
+}
+
+module.exports.unHideWord = function(){
+  setCurrentWord(currentWord);
+}
+
 
 $(document).ready(function(){
   module.exports.getNextWord();

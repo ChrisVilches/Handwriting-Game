@@ -13,7 +13,7 @@
   ipcRenderer.on('toggle-debug-canvas', function(){ $('#canvas-mirror').toggle() });
   require('./js/sidebar/BatchAdd');
   require('./js/sidebar/ConfigMenu');
-  require('./js/ShowRep');
+  var ShowRep = require('./js/ShowRep');
   require('./js/CanvasPanel');
   $(document).ready(() => { $('[data-toggle="tooltip"]').tooltip() });
   </script>
@@ -50,6 +50,19 @@
           <div class="form-block-element">
             <label class="switch">
               <input type="checkbox" id="auto-dict-switch">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </label>
+
+        <!-- Hide switch -->
+        <label class="form-block" for="hide-switch" data-toggle="tooltip" data-placement="right" title="Hide word after first pencil stroke">
+
+          <span class="form-block-element">Hide word</span>
+
+          <div class="form-block-element">
+            <label class="switch">
+              <input type="checkbox" id="hide-switch">
               <span class="slider round"></span>
             </label>
           </div>

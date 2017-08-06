@@ -1,5 +1,6 @@
 const DotCanvas = require('./DotCanvas');
 const InputService = require('./InputService');
+const config = require('electron').remote.require('./config');
 const ShowRep = require('./ShowRep');
 
 var squareWidth = 5;
@@ -36,6 +37,11 @@ $(document).ready(function(){
   },
   function(){
     copyCanvas(canvas.getPrettyLines(), canvasMirror);
+    if(config.getHide() && canvas.getLines().length != 0){
+      ShowRep.hideWord();
+    } else {
+      ShowRep.unHideWord();
+    }
   },
   function(){
     canvasMirror.getContext("2d").clearRect(0, 0, canvasMirror.width, canvasMirror.height);

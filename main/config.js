@@ -12,6 +12,15 @@ module.exports = {
     return configObj.autoDict;
   },
 
+  getHide: function(){
+    return configObj.hide;
+  },
+
+  setHide: function(bool){
+    configObj.hide = bool;
+    saveConfigJson();
+  },
+
   dataDir: '.data',
 
   icon: path.join(__dirname, '../icons/icon64x64.png')
@@ -33,7 +42,8 @@ function saveConfigJson(){
   }
   if(!fs.existsSync(pathConfigJson)){
     configObj = {
-      autoDict: false
+      autoDict: false,
+      hide: false
     };
     fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
   } else {
