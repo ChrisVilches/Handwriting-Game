@@ -109,7 +109,7 @@ module.exports = {
     getDS().find({ nextRep: { $lt: date } }).sort({ nextRep: 1 }).exec(callback);
   },
 
-  getRandomLeastRep: function(callback, randomWeight = null){
+  getRandomLeastReps: function(callback, randomWeight = null){
     getDS().count({}, function(err, count){
       if(err || count == 0){
         callback(err);
@@ -121,6 +121,21 @@ module.exports = {
       });
     });
   },
+
+  getRandomLastRep: function(callback, randomWeight = null){
+    getDS().count({}, function(err, count){
+      if(err || count == 0){
+        callback(err);
+      }
+
+      var skipCount = Math.floor(randomLow(randomWeight) * count);
+      getDS().find({}).sort({ lastRepDate: 1 }).skip(skipCount).limit(1).exec(function(err2, docs){
+          callback(err2, docs[0]);
+      });
+    });
+  },
+
+
 
   getRandom: function(callback){
     getDS().count({}, function (err, count) {

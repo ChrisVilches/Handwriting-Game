@@ -51,7 +51,7 @@ var ways = [
   },
 
   function(){
-    db.getRandomLeastRep(function(err, doc){
+    db.getRandomLeastReps(function(err, doc){
       if(err){
         $.notify(err, "warn");
         return;

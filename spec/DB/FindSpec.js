@@ -77,9 +77,18 @@ describe("Find queries", function(){
   }, 1000);
 
   it("get random (least reps)", function(done) {
-    db.getRandomLeastRep(function(err, doc){
+    db.getRandomLeastReps(function(err, doc){
       expect(err).toEqual(null);
       expect(doc.word).toEqual('想像');
+      done();
+    }, 200);
+  }, 1000);
+
+
+  it("get random (sorted by last rep)", function(done) {
+    db.getRandomLastRep(function(err, doc){
+      expect(err).toEqual(null);
+      expect(doc.word).toEqual('喋');
       done();
     }, 200);
   }, 1000);
