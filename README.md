@@ -11,3 +11,10 @@ npm run build
 npm run test
 npm run dev
 ```
+
+Construir el paquete con estos comandos.
+
+```bash
+npm run package-linux
+npm run package-win
+```

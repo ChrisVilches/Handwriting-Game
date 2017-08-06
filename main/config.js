@@ -14,7 +14,7 @@ module.exports = {
 
   dataDir: '.data',
 
-  icon: path.join(__dirname, '../icons/icon.ico')
+  icon: path.join(__dirname, '../icons/icon64x64.png')
 };
 
 var pathConfigJson = path.join(module.exports.dataDir, 'config.json');
@@ -22,7 +22,7 @@ var configObj = {};
 
 function saveConfigJson(){
   console.log("Saving config...");
-  fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));  
+  fs.writeFileSync(pathConfigJson, JSON.stringify(configObj));
 }
 
 

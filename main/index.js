@@ -12,7 +12,7 @@ app.on('window-all-closed', function() {
 		app.quit();
 });
 
-app.on('ready', function() {console.log(__dirname + '../icon.ico')
+app.on('ready', function() {
 
 	var mainWindow = new BrowserWindow({width: 850, height: 650, icon: config.icon });
 	mainWindow.loadURL(path.join('file://', __dirname, '../views/index.html'));
