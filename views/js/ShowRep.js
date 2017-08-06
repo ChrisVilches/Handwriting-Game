@@ -63,7 +63,23 @@ var ways = [
 
       setCurrentWord(doc);
     });
+  },
+
+  function(){
+    db.getRandomLastRep(function(err, doc){
+      if(err){
+        $.notify(err, "warn");
+        return;
+      }
+
+      if(doc){
+        console.log("Using last rep (last rep date: " + doc.lastRepDate + ")");
+      }
+
+      setCurrentWord(doc);
+    });
   }
+
 ];
 
 
