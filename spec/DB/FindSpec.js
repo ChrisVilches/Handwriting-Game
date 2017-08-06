@@ -19,6 +19,39 @@ describe("Find queries", function(){
     });
   }, 1000);
 
+  it("gets scheduled for X (date) count 1", function(done) {
+    db.getScheduledNowCount(function(err, count){
+      expect(err).toEqual(null);
+      expect(count).toEqual(3);
+      done();
+    }, new Date(1499140800000));
+  }, 1000);
+
+  it("gets scheduled for X (date) count 2", function(done) {
+    db.getScheduledNowCount(function(err, count){
+      expect(err).toEqual(null);
+      expect(count).toEqual(4);
+      done();
+    }, new Date(1499140800001));
+  }, 1000);
+
+  it("gets scheduled for X (date) count 3", function(done) {
+    db.getScheduledNowCount(function(err, count){
+      expect(err).toEqual(null);
+      expect(count).toEqual(10);
+      done();
+    }, new Date(1506913200000));
+  }, 1000);
+
+  it("gets scheduled for X (date) count 4", function(done) {
+    db.getScheduledNowCount(function(err, count){
+      expect(err).toEqual(null);
+      expect(count).toEqual(11);
+      done();
+    }, new Date(1506913200001));
+  }, 1000);
+
+
   it("gets nearest words correctly 1", function(done) {
     db.getNearestWords(3, function(err, docs){
       expect(err).toEqual(null);

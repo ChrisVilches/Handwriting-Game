@@ -52,6 +52,13 @@ module.exports = {
     getDS().count({}, callback);
   },
 
+  getScheduledNowCount: function(callback, date){
+    if(!date){
+      date = new Date();
+    }
+    getDS().count({ nextRep: { $lt: date } }, callback);
+  },
+
   setDS(differentDS){
     ds = differentDS;
   },
