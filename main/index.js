@@ -19,7 +19,7 @@ app.on('ready', function() {
 	require('./menu');
 
 	mainWindow.on('closed', function() {
-		mainWindow = null;
+		app.quit();
 	});
 
 });
