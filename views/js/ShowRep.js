@@ -46,7 +46,7 @@ var ways = [
       }
 
       if(doc){
-        console.log("Using a random doc");
+        console.log("("+doc.word+") Using a random doc");
       }
       setCurrentWord(doc);
     });
@@ -60,7 +60,7 @@ var ways = [
       }
 
       if(doc){
-        console.log("Using least reps (reps: " + doc.repCount + ")");
+        console.log("("+doc.word+") Using least reps (reps: " + doc.repCount + ")");
       }
 
       setCurrentWord(doc);
@@ -75,7 +75,7 @@ var ways = [
       }
 
       if(doc){
-        console.log("Using last rep (last rep date: " + doc.lastRepDate + ")");
+        console.log("("+doc.word+") Using last rep (last rep date: " + doc.lastRepDate + ")");
       }
 
       setCurrentWord(doc);
@@ -100,7 +100,7 @@ module.exports.getNextWord = function(){
       getRandomElement(ways)();
     } else {
       var doc = getRandomElement(docs);
-      console.log("Scheduled for now (date: " + doc.nextRep + ")");
+      console.log("("+doc.word+") Scheduled for now (date: " + doc.nextRep + ")");
       setCurrentWord(doc);
     }
   });
