@@ -40,6 +40,8 @@ module.exports = {
 
   passScore: 50,
 
+  minInterval: 3 * 60 * 60,
+
   icon: path.join(__dirname, '../icons/icon64x64.png')
 };
 

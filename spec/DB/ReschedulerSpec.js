@@ -1,7 +1,13 @@
 var db = require('../../main/db');
+var config = require('../../main/config');
 var doc;
 
 describe("rescheduler", function(){
+
+  beforeAll(function(){
+    // set a minimum interval
+    config.lastInterval = 3 * 60 * 60; // 3 hours
+  });
 
   beforeEach(function() {
     doc = {
@@ -29,12 +35,65 @@ describe("rescheduler", function(){
 
     expect(db.rescheduleDoc(doc, 100).lastInterval).toEqual(86400 * 2);
     expect(db.rescheduleDoc(doc, 50).lastInterval).toEqual(86400);
-    expect(db.rescheduleDoc(doc, 0).lastInterval).toEqual(0);
+    expect(db.rescheduleDoc(doc, 0).lastInterval).toEqual(config.minInterval);
     expect(db.rescheduleDoc(doc, 75).lastInterval).toEqual(129600);
     expect(db.rescheduleDoc(doc, 25).lastInterval).toEqual(86400 * 0.5);
     expect(db.rescheduleDoc(doc, 10).lastInterval).toEqual(86400 * 0.2);
 
   });
+
+
+  describe("min interval", function(){
+
+    beforeEach(function() {
+      doc = {
+        word: '世界',
+        nextRep: new Date('2017/07/03 00:00:00'),
+        lastInterval: 86400,
+        lastRepDate: new Date('2017/06/02 00:00:00'),
+        repCount: 0
+      };
+    });
+
+    it("computes interval correctly (above minimum)", function(){
+      expect(db.rescheduleDoc(doc, 100).lastInterval).toEqual(86400 * 2);
+      expect(db.rescheduleDoc(doc, 75).lastInterval).toEqual(86400 * 1.5);
+      expect(db.rescheduleDoc(doc, 50).lastInterval).toEqual(86400);
+      expect(db.rescheduleDoc(doc, 25).lastInterval).toEqual(86400 * 0.5);
+      expect(db.rescheduleDoc(doc, 10).lastInterval).toEqual(86400 * 0.2);
+      expect(db.rescheduleDoc(doc, 7).lastInterval).toEqual(Math.round(86400 * 0.14));
+    });
+    it("computes interval correctly (below minimum)", function(){
+      expect(db.rescheduleDoc(doc, 6).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 5).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 4).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 3).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 2).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 1).lastInterval).toEqual(config.lastInterval);
+      expect(db.rescheduleDoc(doc, 0).lastInterval).toEqual(config.lastInterval);
+    });
+
+    it("corner case 1", function(){
+      doc.lastInterval = 10;
+      expect(db.rescheduleDoc(doc, 51).lastInterval).toEqual(config.lastInterval);
+    });
+
+    it("corner case 2", function(){
+      doc.lastInterval = 0;
+      expect(db.rescheduleDoc(doc, 0).lastInterval).toEqual(config.lastInterval);
+    });
+
+    it("corner case 3", function(){
+      doc.lastInterval = config.lastInterval;
+      expect(db.rescheduleDoc(doc, 50).lastInterval).toEqual(config.lastInterval);
+    });
+
+    it("corner case 4", function(){
+      doc.lastInterval = config.lastInterval - 10;
+      expect(db.rescheduleDoc(doc, 51).lastInterval).toEqual(11005);
+    });
+  });
+
 
   it("intervals are integers", function() {
     expect(db.rescheduleDoc(doc, 100).lastInterval % 1).toEqual(0);
@@ -63,40 +122,7 @@ describe("rescheduler", function(){
   });
 
 
-
   it("new dates are correct 1", function() {
-
-    doc = {
-      word: '世界',
-      nextRep: new Date('2017/07/03 00:00:00'),
-      lastInterval: 1,
-      repCount: 0
-    };
-
-    doc = db.rescheduleDoc(doc, 100);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:02'));
-
-    doc = db.rescheduleDoc(doc, 100);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:06'));
-
-    doc = db.rescheduleDoc(doc, 100);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:14'));
-
-    doc = db.rescheduleDoc(doc, 50);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:22'));
-
-    doc = db.rescheduleDoc(doc, 50);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:30'));
-
-    doc = db.rescheduleDoc(doc, 25);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:34'));
-
-    doc = db.rescheduleDoc(doc, 0);
-    expect(doc.nextRep).toEqual(new Date('2017/07/03 00:00:34'));
-
-  });
-
-  it("new dates are correct 2", function() {
 
     doc = db.rescheduleDoc(doc, 50);
     expect(doc.nextRep).toEqual(new Date('2017/07/04 00:00:00'));
@@ -115,7 +141,7 @@ describe("rescheduler", function(){
 
   });
 
-  it("new dates are correct 3 (using fromNow = true, alwaysReschedule = true)", function() {
+  it("new dates are correct 2 (using fromNow = true, alwaysReschedule = true)", function() {
 
     var now = new Date();
     var copyNow;

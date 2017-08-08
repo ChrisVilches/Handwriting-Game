@@ -101,7 +101,7 @@ module.exports = {
         newDoc.nextRep = new Date();
       }
       newDoc.nextRep.setSeconds(newDoc.nextRep.getSeconds() + interval);
-      newDoc.lastInterval = interval;
+      newDoc.lastInterval = Math.max(interval, config.minInterval);
     }
 
     newDoc.lastRepDate = new Date();
