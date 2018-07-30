@@ -1,6 +1,6 @@
 {
   "name": "shodo",
-  "productName": "Nice app",
+  "productName": "Handwriting Game",
   "version": "1.0.0",
   "description": "",
   "main": "main/index.js",

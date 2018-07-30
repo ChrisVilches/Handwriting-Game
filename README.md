@@ -1,8 +1,10 @@
 # Handwriting Game
 
-Juego en el cual aparecen palabras (agregadas por el usuario) y se deben escribir pero dibujandolas en un canvas.
+A game where random (user defined) words appear on screen, and you must handwrite them on a canvas.
 
-Utiliza un algoritmo de repetición espaciada y se puede usar para aprender a escribir en otros idiomas.
+It uses a spaced repetition algorithm, and it can be used to learn how to write new languages.
+
+## Install
 
 ```bash
 npm install
@@ -12,7 +14,9 @@ npm run test
 npm run dev
 ```
 
-Construir el paquete con estos comandos. Considerar que necesita `electron-packager` instalado globalmente.
+## Build for Windows or Linux
+
+It needs the `electron-packager` package installed globally.
 
 ```bash
 npm run package-linux

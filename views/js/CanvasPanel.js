@@ -81,6 +81,10 @@ $(document).ready(function(){
 
   $("#canvas-answer").click(function(){
     var lines = canvas.getLines();
+
+    $("#canvas-answer").hide();
+    $("#canvas-answer-loading").show();
+
     service.getCharacters(lines, data => {
 
       if(data == null || data.length == 0) return;
@@ -88,8 +92,14 @@ $(document).ready(function(){
         canvas.clear();
       });
 
+      $("#canvas-answer").show();
+      $("#canvas-answer-loading").hide();
 
-    }, e => { console.log("Error:", e); });
+    }, e => {
+      $("#canvas-answer").show();
+      $("#canvas-answer-loading").hide();
+      console.log("Error:", e);
+    });
   });
 
 

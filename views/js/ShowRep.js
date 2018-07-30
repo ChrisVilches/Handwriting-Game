@@ -134,12 +134,21 @@ module.exports.tryAnswer = function(response, callback){
     console.assert(score <= config.highestScore);
 
     db.updateWordSchedule(currentWord._id, score, module.exports.getNextWord, { fromNow: true });
-    $.notify("(^_^) " + currentWord.word + " = " + response[i] + " (i: " + i + ")", "success");
+    $.notify("Correct!", "success");
     console.log("Correct answer (score: "+score+", max score: "+config.highestScore+", lowest: "+config.lowestScore+", i: "+i+", easiness: "+config.getEasiness()+")");
     callback(true);
   } else {
     db.updateWordSchedule(currentWord._id, config.lowestScore, module.exports.getNextWord, { fromNow: true });
-    $.notify("(T_T) " + currentWord.word + " ≠ " + response, "warn");
+
+    let looksLike;
+
+    if(response.hasOwnProperty('length')){
+      looksLike = response[0];
+    } else {
+      looksLike = response;
+    }
+
+    $.notify("Incorrect! Your answer looks more like " + looksLike, "warn");
     callback(false);
   }
 }

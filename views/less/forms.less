@@ -29,6 +29,11 @@ input{
 .btn-primary {
   background-color: @btn-primary-color;
   color: @light;
+  &:disabled{
+    &:hover{
+      background-color: @btn-primary-color;
+    }
+  }
 }
 
 .btn-secondary, .btn-secondary:hover, .btn-secondary:focus {
